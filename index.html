@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#ff4f91">
+    <title>HAPAS | Sinh nhật 7 tuổi – Vòng quay may mắn</title>
+    <style>
+        :root {
+            --pink: #ff4f91;
+            --hot: #d90d53;
+            --pale: #fff0f7;
+            --gold: #ffd978;
+            --ink: #7e103d
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-rounded, "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+            color: var(--ink);
+            background: radial-gradient(circle at 15% 10%, #fff 0 2px, transparent 3px), linear-gradient(145deg, #ffd9eb, #fff0f7 42%, #ffc3df);
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        body:before,
+        body:after {
+            content: "✦  ·  ♡  ·  ✧  ·  ♡  ·  ✦";
+            position: fixed;
+            color: #fff8;
+            letter-spacing: 20px;
+            font-size: 26px;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 12s linear infinite;
+            white-space: nowrap
+        }
+
+        body:before {
+            top: 13%;
+            left: -20px
+        }
+
+        body:after {
+            bottom: 15%;
+            right: -25px;
+            animation-delay: -6s
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(-2%) rotate(-4deg)
+            }
+
+            50% {
+                transform: translateX(3%) rotate(4deg)
+            }
+
+            100% {
+                transform: translateX(-2%) rotate(-4deg)
+            }
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 980px;
+            margin: auto;
+            padding: 20px 14px 28px
+        }
+
+        .hero {
+            text-align: center;
+            padding: 14px 8px 4px
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: #fff9;
+            border: 1px solid #fff;
+            padding: 7px 15px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #c61b59;
+            box-shadow: 0 5px 18px #d82b7015
+        }
+
+        h1 {
+            font-size: clamp(30px, 7vw, 58px);
+            line-height: 1.02;
+            margin: 13px 0 8px;
+            color: #d41455;
+            text-shadow: 0 3px 0 #fff, 0 7px 15px #f17bab50;
+            font-weight: 1000
+        }
+
+        .subtitle {
+            font-size: clamp(14px, 3vw, 19px);
+            font-weight: 800;
+            margin: 0 auto 13px;
+            max-width: 600px;
+            color: #9e2353
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fff8d9, #ffe8a1);
+            border: 2px solid #f3bd4e;
+            border-radius: 16px;
+            padding: 8px 18px;
+            color: #a44b00;
+            font-size: 14px;
+            font-weight: 950;
+            box-shadow: 0 5px 0 #eaa4bf
+        }
+
+        .game {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            justify-items: center;
+            gap: 15px;
+            margin: 15px auto 0
+        }
+
+        .wheel-wrap {
+            position: relative;
+            width: min(88vw, 490px);
+            aspect-ratio: 1;
+            filter: drop-shadow(0 0 13px #ff8bbd) drop-shadow(0 12px 16px #b31d5b30);
+            padding: 0
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .pointer {
+            position: absolute;
+            z-index: 3;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 21px solid transparent;
+            border-right: 21px solid transparent;
+            border-top: 42px solid #c70c4c;
+            filter: drop-shadow(0 3px 2px #8d164b55)
+        }
+
+        .pointer:after {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: -39px;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 24px solid #ffe8a5
+        }
+
+        .spinbtn {
+            border: 0;
+            border-radius: 999px;
+            padding: 15px 34px;
+            background: linear-gradient(135deg, #ff4387, #d80b52);
+            color: white;
+            font-size: 19px;
+            font-weight: 1000;
+            letter-spacing: .4px;
+            box-shadow: 0 7px 0 #a90d47, 0 12px 24px #d72d6a35;
+            cursor: pointer;
+            transition: transform .15s
+        }
+
+        .spinbtn:active {
+            transform: translateY(4px);
+            box-shadow: 0 3px 0 #a90d47
+        }
+
+        .spinbtn:disabled {
+            opacity: .6;
+            cursor: not-allowed
+        }
+
+        .hint {
+            font-size: 12px;
+            text-align: center;
+            color: #9f3860;
+            margin: 0;
+            max-width: 440px;
+            line-height: 1.55
+        }
+
+        .result {
+            display: none;
+            width: min(100%, 560px);
+            text-align: center;
+            background: linear-gradient(145deg, #fff, #fff3f8);
+            border: 2px solid #ffc1d9;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 12px 35px #c21c5b22;
+            animation: pop .4s ease
+        }
+
+        .result.show {
+            display: block
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(.88)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        .result .small {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #b33868
+        }
+
+        .result h2 {
+            margin: 5px 0 8px;
+            font-size: clamp(23px, 5vw, 34px);
+            color: #d20f51
+        }
+
+        .result img {
+            width: min(100%, 260px);
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 17px;
+            border: 3px solid #ffcee0;
+            box-shadow: 0 5px 18px #d42c6c20
+        }
+
+        .result p {
+            margin: 8px 0 0;
+            font-weight: 800;
+            line-height: 1.5
+        }
+
+        footer {
+            margin: 23px auto 0;
+            text-align: center;
+            padding: 18px 10px 8px;
+            border-top: 1px dashed #ef8eb8
+        }
+
+        .footerline {
+            font-weight: 1000;
+            color: #a61950;
+            font-size: clamp(14px, 3.3vw, 21px);
+            line-height: 1.5
+        }
+
+        .footerline span {
+            color: #e52e72
+        }
+
+        .footnote {
+            font-size: 10px;
+            color: #a35c7a;
+            margin-top: 12px
+        }
+
+        .confetti {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden
+        }
+
+        .confetti i {
+            position: absolute;
+            top: -20px;
+            width: 9px;
+            height: 14px;
+            border-radius: 3px;
+            animation: fall 2.8s linear forwards
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: .2
+            }
+        }
+
+        @media(min-width:760px) {
+            .game {
+                gap: 18px
+            }
+
+            .wheel-wrap {
+                width: min(70vw, 490px)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+
+
+        .history {
+            width: min(100%, 680px);
+            margin: 18px auto 0;
+            background: linear-gradient(145deg, #fff, #fff2f8);
+            border: 2px solid #ffc1d9;
+            border-radius: 22px;
+            padding: 16px;
+            box-shadow: 0 10px 28px #c21c5b18
+        }
+
+        .history h2 {
+            margin: 0 0 8px;
+            text-align: center;
+            color: #d20f51;
+            font-size: clamp(20px, 4.5vw, 27px)
+        }
+
+        .history-note {
+            text-align: center;
+            font-size: 12px;
+            color: #a35c7a;
+            margin: 0 0 12px;
+            line-height: 1.5
+        }
+
+        .history-empty {
+            text-align: center;
+            padding: 16px 8px;
+            color: #a35c7a;
+            font-weight: 700
+        }
+
+        .history-list {
+            display: grid;
+            gap: 9px
+        }
+
+        .history-item {
+            display: grid;
+            grid-template-columns: 42px minmax(0, 1fr);
+            gap: 10px;
+            align-items: center;
+            background: #fff8fb;
+            border: 1px solid #ffd3e3;
+            border-radius: 14px;
+            padding: 10px
+        }
+
+        .history-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #ffe0ee;
+            font-size: 22px
+        }
+
+        .history-prize {
+            font-weight: 900;
+            color: #a61950;
+            overflow-wrap: anywhere
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: #a35c7a;
+            margin-top: 3px
+        }
+
+        .history-clear {
+            display: block;
+            margin: 12px auto 0;
+            border: 1px solid #f3a7c8;
+            border-radius: 999px;
+            padding: 8px 14px;
+            background: #fff;
+            color: #b11b54;
+            font-weight: 800
+        }
+
+        .customer-thanks {
+            width: 100%;
+            margin: 14px auto 0;
+            text-align: center
+        }
+
+        .customer-thanks img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 980px;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px #b91c5b1a
+        }
+
+
+        /* Hộp quà sinh nhật trang trí */
+        .gift-scene {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: clamp(12px, 4vw, 34px);
+            height: 112px;
+            margin: 15px auto 4px;
+            max-width: 480px;
+            pointer-events: none
+        }
+
+        .gift-box {
+            --box: #ff4f91;
+            --lid: #ff79ad;
+            position: relative;
+            width: 72px;
+            height: 58px;
+            border-radius: 7px 7px 10px 10px;
+            background: linear-gradient(100deg, var(--box), #ff9bc1 48%, var(--box));
+            box-shadow: 0 8px 0 #d52c6c30, 0 12px 18px #c927641f;
+            animation: giftBob 2.8s ease-in-out infinite
+        }
+
+        .gift-box:before {
+            content: "";
+            position: absolute;
+            left: -7px;
+            right: -7px;
+            top: -13px;
+            height: 17px;
+            border-radius: 6px;
+            background: linear-gradient(100deg, var(--lid), #ffc1d9, var(--lid));
+            box-shadow: 0 3px 0 #d52c6c38
+        }
+
+        .gift-box:after {
+            content: "";
+            position: absolute;
+            left: calc(50% - 5px);
+            top: -12px;
+            width: 10px;
+            height: 70px;
+            background: linear-gradient(90deg, #ffe8a0, #fff7d5, #e7a832);
+            border-radius: 4px
+        }
+
+        .gift-box .bow {
+            position: absolute;
+            z-index: 2;
+            left: 50%;
+            top: -28px;
+            width: 23px;
+            height: 18px;
+            border: 6px solid #ffd86e;
+            border-radius: 90% 10% 90% 10%;
+            transform: translateX(-90%) rotate(25deg);
+            filter: drop-shadow(0 2px 1px #a65a3633)
+        }
+
+        .gift-box .bow:after {
+            content: "";
+            position: absolute;
+            width: 23px;
+            height: 18px;
+            left: 12px;
+            top: -6px;
+            border: 6px solid #ffd86e;
+            border-radius: 10% 90% 10% 90%;
+            transform: rotate(-48deg)
+        }
+
+        .gift-box .spark {
+            position: absolute;
+            z-index: 3;
+            right: -13px;
+            top: 5px;
+            color: #fff6a8;
+            font-size: 20px;
+            text-shadow: 0 0 8px #ffb5d1
+        }
+
+        .gift-box.small {
+            width: 54px;
+            height: 43px;
+            transform: scale(.9);
+            --box: #f4a7d2;
+            --lid: #ffc5df;
+            animation-delay: -.8s
+        }
+
+        .gift-box.large {
+            width: 86px;
+            height: 68px;
+            --box: #d91561;
+            --lid: #ff6c9f;
+            animation-delay: -1.4s
+        }
+
+        @keyframes giftBob {
+
+            0%,
+            100% {
+                translate: 0 0;
+                rotate: -2deg
+            }
+
+            50% {
+                translate: 0 -9px;
+                rotate: 2deg
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .gift-box {
+                animation: none
+            }
+        }
+
+
+        .history-item {
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s
+        }
+
+        .history-item:active {
+            transform: scale(.985)
+        }
+
+        .history-open {
+            font-size: 11px;
+            color: #d12b68;
+            font-weight: 800;
+            margin-top: 4px
+        }
+
+        .history-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: #4b1232b8;
+            align-items: center;
+            justify-content: center;
+            padding: 18px
+        }
+
+        .history-modal.show {
+            display: flex
+        }
+
+        .history-modal-card {
+            position: relative;
+            width: min(100%, 440px);
+            max-height: 90vh;
+            overflow: auto;
+            background: linear-gradient(145deg, #fff, #fff0f7);
+            border: 3px solid #ffc1d9;
+            border-radius: 24px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 20px 60px #4b123266
+        }
+
+        .history-modal-card h3 {
+            margin: 2px 34px 12px;
+            color: #c71959;
+            font-size: 21px
+        }
+
+        .history-modal-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 62vh;
+            object-fit: contain;
+            border-radius: 14px
+        }
+
+        .history-modal-close {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            border: 0;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            background: #ffe0ed;
+            color: #a61950;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer
+        }
+
+        .history-modal-caption {
+            color: #9e2353;
+            font-weight: 900;
+            margin: 10px 0 0
+        }
+
+
+        /* Giao diện V16: bám sát poster vòng quay HAPAS mới */
+        html,
+        body {
+            min-height: 100%;
+            background: #ffe5f1
+        }
+
+        body {
+            background: linear-gradient(180deg, #ffe7f2 0%, #fff7fb 100%);
+            overflow-x: hidden
+        }
+
+        body:before,
+        body:after {
+            display: none
+        }
+
+        .page:before {
+            display: none
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1211px;
+            margin: 0 auto;
+            padding: 0;
+            isolation: isolate
+        }
+
+        .hero {
+            display: none
+        }
+
+        .game {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 1193/1280;
+            margin: 0 auto;
+            padding: 0;
+            overflow: visible;
+            background: url("assets/hapas-wheel-background.jpg") top center/100% 100% no-repeat
+        }
+
+        .wheel-wrap {
+            position: absolute;
+            top: 27.15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55.5%;
+            max-width: none;
+            aspect-ratio: 1;
+            filter: drop-shadow(0 5px 8px #b31d5b22)
+        }
+
+        .pointer {
+            display: block;
+            top: -1.5%;
+            border-left: clamp(12px, 1.8vw, 21px) solid transparent;
+            border-right: clamp(12px, 1.8vw, 21px) solid transparent;
+            border-top: clamp(25px, 3.5vw, 42px) solid #e4a52b;
+            filter: drop-shadow(0 3px 2px #8d164b55)
+        }
+
+        .pointer:after {
+            left: clamp(-12px, -1vw, -6px);
+            top: clamp(-39px, -3vw, -20px);
+            border-left: clamp(7px, 1vw, 12px) solid transparent;
+            border-right: clamp(7px, 1vw, 12px) solid transparent;
+            border-top: clamp(14px, 2vw, 24px) solid #fff0a8
+        }
+
+        .pointer:after {
+            left: clamp(-12px, -1vw, -6px);
+            top: clamp(-39px, -3vw, -20px);
+            border-left: clamp(7px, 1vw, 12px) solid transparent;
+            border-right: clamp(7px, 1vw, 12px) solid transparent;
+            border-top: clamp(14px, 2vw, 24px) solid #fff0a8
+        }
+
+        .spinbtn {
+            position: absolute;
+            left: 50%;
+            top: 87.1%;
+            transform: translateX(-50%);
+            width: 48%;
+            height: auto;
+            min-height: 54px;
+            margin: 0;
+            padding: 12px 18px;
+            border: 3px solid #ffe9a6;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #ff5a9c, #d70d59);
+            color: #fff;
+            font-size: clamp(17px, 3.8vw, 27px);
+            font-weight: 1000;
+            letter-spacing: .5px;
+            text-shadow: 0 2px 2px #a50d4c;
+            box-shadow: 0 5px 0 #a90d47, 0 0 0 5px #ffb5d2, 0 10px 24px #d72d6a55;
+            cursor: pointer;
+            z-index: 5
+        }
+
+        .spinbtn:active {
+            transform: translateX(-50%) scale(.97);
+            box-shadow: 0 2px 0 #a90d47, 0 0 0 5px #ffb5d2
+        }
+
+        .spinbtn:disabled {
+            opacity: 1;
+            cursor: not-allowed;
+            background: linear-gradient(180deg, #ed79a8, #bf2c67)
+        }
+
+        .customer-thanks {
+            margin: 14px auto 0;
+            padding: 0 14px
+        }
+
+        .result,
+        .history {
+            margin: 14px auto;
+            width: calc(100% - 28px);
+            max-width: 680px
+        }
+
+        footer {
+            margin-left: 14px;
+            margin-right: 14px
+        }
+
+        .hint {
+            text-align: center;
+            margin: 10px auto 0;
+            padding: 0 14px;
+            font-size: 12px
+        }
+
+        @media(max-width:520px) {
+            .wheel-wrap {
+                width: 55.5%;
+                top: 27.15%
+            }
+
+            .spinbtn {
+                top: 87.1%;
+                width: 48%;
+                min-height: 46px;
+                padding: 9px 12px;
+                font-size: clamp(16px, 4vw, 22px)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .gift-box {
+                animation: none
+            }
+        }
+
+        /* V19: nền poster mới, đặt bánh xe đúng tâm vùng trống phía trên bệ */
+        .game {
+            aspect-ratio: 1184/1280;
+            background-image: url("assets/hapas-wheel-background.jpg");
+            background-position: center top;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .wheel-wrap {
+            top: 35.7%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48%;
+            max-width: 620px;
+        }
+
+        .pointer {
+            top: -1.5%;
+        }
+
+        .spinbtn {
+            top: 87.4%;
+        }
+
+        @media(max-width:520px) {
+            .wheel-wrap {
+                top: 35.7%;
+                width: 48%;
+            }
+
+            .spinbtn {
+                top: 87.4%;
+                width: 48%;
+                min-height: 44px;
+                padding: 8px 10px;
+                font-size: clamp(14px, 3.8vw, 20px);
+            }
+        }
+
+        /* V23: tang vong quay len 66%, lam the qua gon va ro trong tung o */
+        .game {
+            width: 100%;
+            aspect-ratio: 1086/1448;
+            background-image: url("assets/hapas-wheel-background.jpg");
+            background-position: center top;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            overflow: visible;
+        }
+
+        .wheel-wrap {
+            top: 32.0%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 66%;
+            max-width: none;
+            aspect-ratio: 1;
+        }
+
+        .spinbtn {
+            top: 87.2%;
+        }
+
+        @media(max-width:520px) {
+            .wheel-wrap {
+                top: 32.0%;
+                width: 66%;
+            }
+
+            .spinbtn {
+                top: 87.2%;
+                width: 48%;
+                min-height: 44px;
+                padding: 8px 10px;
+                font-size: clamp(14px, 3.8vw, 20px);
+            }
+        }
+
+        /* V26: wheel 72%, prize medallions slightly farther from the hub */
+        .wheel-wrap {
+            top: 29.7%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 72%;
+            max-width: none;
+            aspect-ratio: 1
+        }
+
+        @media(max-width:520px) {
+            .wheel-wrap {
+                top: 29.7%;
+                width: 72%
+            }
+        }
+
+        /* V26: continuous pink color transition from the upper poster into the lower section */
+        .lower-area {
+            position: relative;
+            isolation: isolate;
+            margin: 0;
+            padding: 26px 14px 34px;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 8% 12%, rgba(255, 255, 255, .95) 0 2px, transparent 3px), radial-gradient(ellipse at 92% 38%, rgba(255, 255, 255, .8) 0 2px, transparent 3px), radial-gradient(ellipse at 50% 5%, rgba(255, 255, 255, .72), transparent 42%), linear-gradient(180deg, #feb2df 0%, #ffe3f1 18%, #fff5fa 52%, #ffd9eb 100%)
+        }
+
+        .lower-area:before,
+        .lower-area:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            pointer-events: none;
+            border: 2px solid rgba(255, 255, 255, .7);
+            width: 130%;
+            height: 220px;
+            border-radius: 50%;
+            left: -15%;
+            box-shadow: 0 0 18px rgba(255, 255, 255, .7), inset 0 0 18px rgba(255, 255, 255, .45)
+        }
+
+        .lower-area:before {
+            top: -105px;
+            transform: rotate(-5deg)
+        }
+
+        .lower-area:after {
+            bottom: -145px;
+            transform: rotate(5deg)
+        }
+
+        .customer-thanks {
+            position: relative;
+            margin: 0 auto;
+            padding: 0;
+            background: #fbc9e2;
+            line-height: 0;
+            overflow: hidden
+        }
+
+        .customer-thanks img {
+            display: block;
+            width: 100%;
+            max-width: 980px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 0;
+            box-shadow: none;
+            mask-image: linear-gradient(to bottom, transparent 0, #000 34px);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 34px)
+        }
+
+        .hint {
+            position: relative;
+            z-index: 1;
+            margin: 0 auto 18px;
+            padding: 8px 10px;
+            color: #a51a53;
+            font-size: clamp(14px, 3.5vw, 18px);
+            font-weight: 800;
+            line-height: 1.55
+        }
+
+        .result,
+        .history {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 250, 253, .9);
+            border: 2px solid #f58ab8;
+            border-radius: 28px;
+            box-shadow: 0 8px 0 rgba(226, 61, 128, .10), 0 14px 32px rgba(196, 34, 99, .12);
+            backdrop-filter: blur(5px)
+        }
+
+        .result {
+            padding: 20px 16px
+        }
+
+        .history {
+            width: 100%;
+            max-width: 980px;
+            margin: 20px auto 24px;
+            padding: 22px 18px 20px;
+            border-width: 2px;
+            border-radius: 30px
+        }
+
+        .history:before {
+            content: "🎀";
+            position: absolute;
+            top: -18px;
+            left: 14px;
+            font-size: 42px;
+            filter: drop-shadow(0 3px 3px #b51c5930);
+            transform: rotate(-12deg)
+        }
+
+        .history h2 {
+            display: table;
+            margin: 0 auto 10px;
+            padding: 8px 28px;
+            border-radius: 18px 18px 24px 24px;
+            background: linear-gradient(180deg, #ffe5f1, #ffc5df);
+            color: #c20e54;
+            text-shadow: 0 1px #fff;
+            font-size: clamp(22px, 5vw, 30px);
+            box-shadow: 0 4px 0 #f6b0ce
+        }
+
+        .history-note {
+            text-align: center;
+            font-size: clamp(13px, 3vw, 16px);
+            color: #9f3c68;
+            margin: 15px auto 22px;
+            max-width: 720px
+        }
+
+        .history-empty {
+            text-align: center;
+            padding: 26px 10px;
+            color: #a32b60;
+            font-size: clamp(16px, 3.8vw, 22px);
+            line-height: 1.5;
+            font-weight: 900
+        }
+
+        .history-item {
+            background: rgba(255, 240, 247, .92);
+            border: 1px solid #f5a5c8;
+            border-radius: 18px;
+            padding: 12px
+        }
+
+        .history-clear {
+            display: block;
+            margin: 18px auto 0;
+            padding: 11px 24px;
+            background: #fffafd;
+            border: 2px solid #f28ab7;
+            color: #b10f50;
+            font-size: 15px
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            padding: 20px 10px 8px;
+            border-top: 2px dashed #e77eaa;
+            text-align: center
+        }
+
+        .footerline {
+            color: #a91650;
+            font-size: clamp(16px, 3.8vw, 23px);
+            line-height: 1.55
+        }
+
+        .footnote {
+            font-size: 12px;
+            color: #a35c7a;
+            letter-spacing: 1px;
+            margin-top: 16px
+        }
+
+        @media(max-width:520px) {
+            .lower-area {
+                padding: 24px 12px 28px
+            }
+
+            .history {
+                padding: 22px 13px 18px;
+                border-radius: 24px
+            }
+
+            .history h2 {
+                padding: 7px 20px
+            }
+
+            .history:before {
+                font-size: 34px;
+                top: -15px;
+                left: 8px
+            }
+        }
+
+        dialog.history {
+            position: fixed;
+            inset: 0;
+            width: min(680px, calc(100% - 28px));
+            max-height: 85vh;
+            max-height: 85dvh;
+            margin: auto;
+            padding: 52px 20px 24px;
+            overflow-y: auto;
+            background: #fff5fa;
+            color: var(--ink);
+        }
+
+        dialog.history:not([open]),
+        dialog.history-modal:not([open]) {
+            display: none;
+        }
+
+        dialog.history::backdrop,
+        dialog.history-modal::backdrop {
+            background: rgba(70, 10, 38, .6);
+        }
+
+        dialog.history:before {
+            display: none;
+        }
+
+        dialog.history h2 {
+            font-size: clamp(20px, 5vw, 28px);
+        }
+
+        dialog.history-modal[open] {
+            display: flex;
+            width: 100%;
+            max-width: none;
+            height: 100%;
+            max-height: none;
+            margin: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        body:has(dialog[open]) {
+            overflow: hidden;
+        }
+
+        .history-item {
+            grid-template-columns: 72px minmax(0, 1fr);
+        }
+
+        img.history-icon {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid #ffd3e3;
+        }
+        .history-modal-card { max-height: 90dvh; }
+        .history-modal-card img { max-height: 52dvh; }
+        .history-modal-caption { font-size: 16px; line-height: 1.5; }
+        .prize-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        .prize-actions button {
+            flex: 1 1 120px;
+            min-height: 44px;
+            padding: 10px 14px;
+            border: 1px solid #ef9bbf;
+            border-radius: 999px;
+            background: #fff;
+            color: #ac174d;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .prize-actions #viewPrizeHistory { background: #d41455; color: #fff; border-color: #d41455; }
+        .prize-actions button:focus-visible { outline: 3px solid #86113f; outline-offset: 3px; }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="eyebrow">🎀 HAPAS VIỆT NAM PRESENTS 🎀</div>
+            <h1>HAPAS SINH NHẬT<br>7 TUỔI</h1>
+            <p class="subtitle">Vòng quay may mắn · Trao ngàn quà xinh 💝</p>
+            <div class="badge">✨ QUAY 1 LẦN – NHẬN QUÀ YÊU THƯƠNG ✨</div>
+            <div class="gift-scene" aria-hidden="true">
+                <div class="gift-box small"><i class="bow"></i><b class="spark">✦</b></div>
+                <div class="gift-box large"><i class="bow"></i><b class="spark">✧</b></div>
+                <div class="gift-box"><i class="bow"></i><b class="spark">✦</b></div>
+            </div>
+        </header>
+        <main class="game">
+            <div class="wheel-wrap" aria-label="Vòng quay may mắn">
+                <div class="pointer"></div>
+                <canvas id="wheel" width="900" height="900"></canvas>
+            </div>
+            <button id="spin" class="spinbtn" aria-label="Quay ngay">🎁 QUAY NGAY 🎁</button>
+        </main>
+        <section class="customer-thanks" aria-label="HAPAS cảm ơn khách hàng">
+            <img src="assets/hapas-cam-on-khach-hang.jpg" alt="HAPAS cảm ơn khách hàng và thông tin hỗ trợ khách hàng">
+        </section>
+        <div class="lower-area">
+            <p class="hint" id="hint">Nhấn “Quay ngay” để khám phá món quà sinh nhật HAPAS dành tặng bạn nhé! 💕</p>
+            <section class="result" id="result" aria-live="polite" role="status">
+                <div class="small">🎉 KẾT QUẢ TRÚNG THƯỞNG 🎉</div>
+                <h2 id="resultTitle">CHÚC MỪNG BẠN!</h2>
+                <img id="resultImage" src="assets/voucher-uu-dai-dac-biet.png" alt="VOUCHER ƯU ĐÃI ĐẶC BIỆT">
+                <p id="resultPrize">🎁 VOUCHER ƯU ĐÃI ĐẶC BIỆT</p>
+                <p style="font-size:12px;font-weight:600">Vui lòng liên hệ nhân viên chương trình để được hướng dẫn nhận
+                    quà và xác nhận điều kiện áp dụng.</p>
+            </section>
+            <button type="button" class="history-clear" id="openHistory">Xem lịch sử quay</button>
+            <footer>
+                <div class="footerline">Thời Trang Túi Xách <span>– Kiến Tạo –</span><br>Phong Cách Việt</div>
+                <div class="footerline" style="margin-top:9px">Hapas Sinh Nhật 7 Tuổi <span>– Trao Ngàn Quà Xinh
+                        –</span><br>Gửi Trọn Yêu Thương 💗</div>
+                <div class="footnote">HAPAS · SINCE 2019 · MADE WITH LOVE</div>
+            </footer>
+        </div>
+
+    </div>
+
+    <dialog class="history" id="history" aria-labelledby="historyTitle">
+        <button type="button" class="history-modal-close" id="closeHistory" aria-label="Đóng lịch sử">&times;</button>
+        <h2>📜 LỊCH SỬ QUAY</h2>
+        <p class="history-note">Xem lại kết quả quay được lưu trên trình duyệt của thiết bị này.</p>
+        <div class="history-list" id="historyList">
+            <div class="history-empty">Chưa có lượt quay nào. Hãy nhấn “QUAY NGAY” để bắt đầu nhé! 💗</div>
+        </div>
+    </dialog>
+
+    <dialog class="history-modal" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+        <div class="history-modal-card">
+            <button type="button" class="history-modal-close" id="closeHistoryModal" aria-label="Đóng">×</button>
+            <h3 id="historyModalTitle">🎁 Hình ảnh phần thưởng</h3>
+            <img id="historyModalImage" src="assets/voucher-uu-dai-dac-biet.png" alt="Hình ảnh phần thưởng">
+            <p class="history-modal-caption" id="historyModalCaption"></p>
+            <div class="prize-actions">
+                <button type="button" id="dismissPrize">Đóng</button>
+                <button type="button" id="viewPrizeHistory">Xem lịch sử quay</button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="confetti" id="confetti"></div>
+    <script>
+        const prizes = [
+            { name: "Bộ quà tặng HAPAS 1", img: "assets/bo-qua-hapas-1.jpg", color: "#ffd4e6" },
+            { name: "VOUCHER ƯU ĐÃI ĐẶC BIỆT", img: "assets/voucher-uu-dai-dac-biet.png", color: "#ff8bb9" },
+            { name: "Hộp quà bí ẩn HAPAS", img: "assets/hop-qua-bi-an.jpg", color: "#ffd4e6" },
+            { name: "Bộ quà tặng HAPAS 2", img: "assets/bo-qua-hapas-2.jpg", color: "#ff8bb9" },
+            { name: "Bộ quà tặng HAPAS 3", img: "assets/bo-qua-hapas-3.jpg", color: "#ffd4e6" },
+            { name: "Đồng hồ HAPAS", img: "assets/dong-ho-hapas.jpg", color: "#ff8bb9" },
+            { name: "Bộ quà tặng HAPAS 4", img: "assets/bo-qua-hapas-4.jpg", color: "#ffd4e6" },
+            { name: "Voucher HAPAS 3.000.000 VNĐ", img: "assets/voucher-hapas.jpg", color: "#ff8bb9" },
+            { name: "Chúc bạn may mắn lần sau", img: "assets/may-man-lan-sau-moi.jpg", color: "#ffd4e6" }
+        ];
+        const canvas = document.getElementById("wheel"), ctx = canvas.getContext("2d");
+        const W = canvas.width, C = W / 2, R = 410, N = prizes.length, slice = Math.PI * 2 / N;
+        const USED_KEY = "hapas_birthday7_spin_used_v1";
+        const ROTATION_KEY = "hapas_birthday7_spin_rotation_v1";
+        const WINNING_INDEX = 1;
+        function restoreRotation() {
+            try {
+                if (localStorage.getItem(USED_KEY) !== "1") return 0;
+                const saved = localStorage.getItem(ROTATION_KEY);
+                if (saved !== null && saved.trim() !== "" && Number.isFinite(Number(saved))) {
+                    return ((Number(saved) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+                }
+                // Older completed spins always awarded the same voucher.
+                return (Math.PI * 2 - (WINNING_INDEX + 0.5) * slice) % (Math.PI * 2);
+            } catch (e) { return 0; }
+        }
+        let rotation = restoreRotation(), spinning = false;
+        const pics = prizes.map(p => { const im = new Image(); im.src = p.img; im.onload = drawWheel; return im; });
+        function roundedRect(c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); c.fill(); }
+        let bulbPhase = 0;
+        function drawWheel() {
+            ctx.clearRect(0, 0, W, W);
+            ctx.save(); ctx.translate(C, C); ctx.rotate(rotation);
+
+            // Layered metallic outer rim
+            ctx.beginPath(); ctx.arc(0, 0, R + 22, 0, Math.PI * 2); ctx.fillStyle = "#b96a17"; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, R + 15, 0, Math.PI * 2); ctx.fillStyle = "#fff2bd"; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, R + 7, 0, Math.PI * 2); ctx.fillStyle = "#e83d83"; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.fillStyle = "#fff8fc"; ctx.fill();
+
+            for (let i = 0; i < N; i++) {
+                const a = -Math.PI / 2 + i * slice, b = a + slice;
+                ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, a, b); ctx.closePath();
+                ctx.fillStyle = prizes[i].color; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = "#fff9fd"; ctx.stroke();
+
+                // Circular prize medallion: image stays fully inside its own wedge.
+                const mid = a + slice / 2, rr = 244, x = Math.cos(mid) * rr, y = Math.sin(mid) * rr;
+                const im = pics[i], size = 132, radius = size / 2;
+                ctx.save(); ctx.translate(x, y); ctx.rotate(mid + Math.PI / 2);
+                ctx.shadowColor = "#a90e4b55"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
+                ctx.beginPath(); ctx.arc(0, 0, radius + 7, 0, Math.PI * 2);
+                const tileGrad = ctx.createRadialGradient(-18, -20, 4, 0, 0, radius + 7);
+                tileGrad.addColorStop(0, "#fffdfd"); tileGrad.addColorStop(.62, "#fff2f8"); tileGrad.addColorStop(1, "#ffe3ef");
+                ctx.fillStyle = tileGrad; ctx.fill();
+                ctx.shadowColor = "transparent"; ctx.lineWidth = 3.5; ctx.strokeStyle = "#e7b34c"; ctx.stroke();
+                ctx.save(); ctx.beginPath(); ctx.arc(0, 0, radius, 0, Math.PI * 2); ctx.clip();
+                ctx.fillStyle = "#fffafd"; ctx.fillRect(-radius, -radius, size, size);
+                if (im && im.complete && im.naturalWidth) {
+                    const pad = 7, box = size - pad * 2;
+                    const scale = Math.min(box / im.naturalWidth, box / im.naturalHeight);
+                    const iw = im.naturalWidth * scale, ih = im.naturalHeight * scale;
+                    ctx.drawImage(im, -iw / 2, -ih / 2, iw, ih);
+                } else { ctx.fillStyle = "#fff"; ctx.fillRect(-radius, -radius, size, size); }
+                ctx.restore();
+                // Fine inner white ring gives every circular image a clean, finished edge.
+                ctx.beginPath(); ctx.arc(0, 0, radius - 1, 0, Math.PI * 2); ctx.lineWidth = 2; ctx.strokeStyle = "#fff9fd"; ctx.stroke();
+                ctx.restore();
+
+                // Neat two-line caption, placed radially below each image tile
+                const label = prizes[i].name
+                    .replace("Voucher HAPAS ", "Voucher ")
+                    .replace(" VNĐ", "");
+                ctx.save(); ctx.translate(Math.cos(mid) * 350, Math.sin(mid) * 350);
+                ctx.rotate(mid + Math.PI / 2);
+                ctx.fillStyle = "#86113f"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                ctx.font = "900 17px Arial";
+                const words = label.split(" "); let lines = [], line = "";
+                for (const word of words) {
+                    const test = line ? line + " " + word : word;
+                    if (ctx.measureText(test).width > 166 && line) { lines.push(line); line = word; }
+                    else line = test;
+                }
+                if (line) lines.push(line);
+                if (lines.length > 2) lines = [lines.slice(0, 2).join(" "), lines.slice(2).join(" ")];
+                if (i === WINNING_INDEX) {
+                    lines = ["VOUCHER", "ƯU ĐÃI", "ĐẶC BIỆT"];
+                }
+                lines.forEach((ln, j) => ctx.fillText(ln, 0, (j - (lines.length - 1) / 2) * 19));
+                ctx.restore();
+            }
+
+            // Gold inner highlight ring
+            ctx.beginPath(); ctx.arc(0, 0, R - 4, 0, Math.PI * 2);
+            ctx.lineWidth = 5; ctx.strokeStyle = "#ffe7a0"; ctx.stroke();
+
+            // Central HAPAS medallion
+            ctx.beginPath(); ctx.arc(0, 0, 79, 0, Math.PI * 2); ctx.fillStyle = "#c47b1c"; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, 71, 0, Math.PI * 2); ctx.fillStyle = "#fff0bd"; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, 62, 0, Math.PI * 2); ctx.fillStyle = "#fffaf0"; ctx.fill();
+            ctx.fillStyle = "#a9154b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.font = "900 27px Georgia"; ctx.fillText("HAPAS", 0, 2);
+            ctx.restore();
+
+            // Separate fixed outer marquee bulbs: warm-white lamps with alternating glow.
+            ctx.save(); ctx.translate(C, C);
+            ctx.beginPath(); ctx.arc(0, 0, R + 28, 0, Math.PI * 2);
+            ctx.strokeStyle = "#f5bf55"; ctx.lineWidth = 5; ctx.stroke();
+            for (let i = 0; i < 40; i++) {
+                const a = -Math.PI / 2 + i * Math.PI * 2 / 40;
+                const x = Math.cos(a) * (R + 28), y = Math.sin(a) * (R + 28);
+                const lit = ((i + bulbPhase) % 4) !== 0;
+                ctx.beginPath(); ctx.arc(x, y, lit ? 7.2 : 6.2, 0, Math.PI * 2);
+                ctx.fillStyle = lit ? "#fffef1" : "#ffd2e4";
+                ctx.shadowColor = lit ? "#fff3a5" : "#ff5d9e";
+                ctx.shadowBlur = lit ? 18 : 10; ctx.fill();
+                ctx.shadowBlur = 0; ctx.lineWidth = 1.5; ctx.strokeStyle = "#fff4ce"; ctx.stroke();
+            }
+            ctx.restore();
+        }
+        drawWheel();
+        setInterval(() => { bulbPhase = (bulbPhase + 1) % 4; drawWheel(); }, 180);
+
+        const spinBtn = document.getElementById("spin"), hint = document.getElementById("hint"), result = document.getElementById("result");
+        let audioCtx;
+        function tone(freq, duration, when = 0, type = "sine", vol = .045) {
+            try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = type; o.frequency.value = freq; g.gain.setValueAtTime(vol, audioCtx.currentTime + when); g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + when + duration); o.connect(g); g.connect(audioCtx.destination); o.start(audioCtx.currentTime + when); o.stop(audioCtx.currentTime + when + duration); } catch (e) { }
+        }
+        // Am thanh vong quay phong cach chuong pha le: trong, thanh thot, nhe tai va cham dan theo banh xe.
+        function spinSound() {
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                const ctx = audioCtx, now = ctx.currentTime, total = 6;
+                const master = ctx.createGain();
+                master.gain.setValueAtTime(.72, now);
+                master.connect(ctx.destination);
+
+                // Nen leng keng rat nhe, tao cam giac lung linh nhung khong lan at tieng chuong.
+                const shimmer = ctx.createOscillator(), shimmerGain = ctx.createGain();
+                const shimmerFilter = ctx.createBiquadFilter();
+                shimmer.type = 'sine'; shimmer.frequency.setValueAtTime(660, now);
+                shimmer.frequency.exponentialRampToValueAtTime(330, now + total);
+                shimmerFilter.type = 'lowpass'; shimmerFilter.frequency.value = 1250;
+                shimmerGain.gain.setValueAtTime(.0001, now);
+                shimmerGain.gain.linearRampToValueAtTime(.018, now + .25);
+                shimmerGain.gain.exponentialRampToValueAtTime(.0001, now + total);
+                shimmer.connect(shimmerFilter); shimmerFilter.connect(shimmerGain); shimmerGain.connect(master);
+                shimmer.start(now); shimmer.stop(now + total);
+
+                // Moi nhip cham la mot tieng chuong nho co hai hoa am, dam chat chuong pha le.
+                function chime(at, strength, index) {
+                    const t = now + at;
+                    const notes = [1046.5, 1318.5, 1568, 1760, 1568, 1318.5, 1174.7, 1396.9];
+                    const f = notes[index % notes.length];
+                    [[1, .105, .34], [2.76, .026, .19], [4.08, .012, .13]].forEach(([ratio, level, decay]) => {
+                        const osc = ctx.createOscillator(), gain = ctx.createGain();
+                        osc.type = 'sine'; osc.frequency.setValueAtTime(f * ratio, t);
+                        osc.detune.setValueAtTime((index % 3 - 1) * 2, t);
+                        gain.gain.setValueAtTime(.0001, t);
+                        gain.gain.linearRampToValueAtTime(level * strength, t + .006);
+                        gain.gain.exponentialRampToValueAtTime(.0001, t + decay);
+                        osc.connect(gain); gain.connect(master); osc.start(t); osc.stop(t + decay + .015);
+                    });
+                    // Click nho, mem, giup moi tieng chuong van co cam giac khop cua banh xe.
+                    const click = ctx.createOscillator(), cg = ctx.createGain();
+                    click.type = 'triangle'; click.frequency.setValueAtTime(2100, t);
+                    click.frequency.exponentialRampToValueAtTime(1150, t + .025);
+                    cg.gain.setValueAtTime(.0001, t); cg.gain.linearRampToValueAtTime(.035 * strength, t + .002);
+                    cg.gain.exponentialRampToValueAtTime(.0001, t + .035);
+                    click.connect(cg); cg.connect(master); click.start(t); click.stop(t + .04);
+                }
+
+                // Nhip chuong nhanh dan dau vong, sau do gian ra theo toc do giam dan.
+                let at = .04, index = 0;
+                while (at < 5.78) {
+                    const progress = at / total;
+                    const strength = .82 - progress * .24;
+                    chime(at, strength, index++);
+                    at += .105 + Math.pow(progress, 2.15) * .48;
+                    if (index > 75) break;
+                }
+            } catch (e) {/* Trinh duyet khong ho tro audio thi vong quay van hoat dong binh thuong. */ }
+        }
+        function winSound() { [784, 988, 1174.7, 1568, 1760].forEach((f, i) => tone(f, .42, i * .12, "sine", .075)) }
+        function confetti() { const box = document.getElementById("confetti"); box.innerHTML = ""; const colors = ["#ff3f87", "#ffd34f", "#fff", "#ec73b1", "#b65cff"]; for (let i = 0; i < 90; i++) { const el = document.createElement("i"); el.style.left = Math.random() * 100 + "%"; el.style.background = colors[i % colors.length]; el.style.animationDelay = (Math.random() * .7) + "s"; el.style.transform = `rotate(${Math.random() * 360}deg)`; box.appendChild(el) } setTimeout(() => box.innerHTML = "", 4000) }
+        function setUsed() {
+            try { localStorage.setItem(ROTATION_KEY, String(rotation)); } catch (e) { }
+            try { localStorage.setItem(USED_KEY, "1"); } catch (e) { }
+        }
+        function alreadyUsed() { try { return localStorage.getItem(USED_KEY) === "1" } catch (e) { return false } }
+        const HISTORY_KEY = "hapas_birthday7_spin_history_v1";
+        function readHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]") } catch (e) { return [] } }
+        function renderHistory() {
+            const list = document.getElementById("historyList");
+            if (!list) return;
+            const entries = readHistory();
+            if (!entries.length) { list.innerHTML = '<div class="history-empty">Chưa có lượt quay nào. Hãy nhấn “QUAY NGAY” để bắt đầu nhé! 💗</div>'; return; }
+            list.innerHTML = entries.slice().reverse().map((entry, index) => {
+                const storedPrize = String(entry.prize || "");
+                const prizeText = /5\.000\.000|5 tri\u1ec7u/i.test(storedPrize) ? prizes[WINNING_INDEX].name : storedPrize;
+                const imagePath = historyImageFor(prizeText);
+                return `<article class="history-item" role="button" tabindex="0" data-image="${imagePath}" data-prize="${escapeHTML(prizeText)}" aria-label="Nhấn để xem ảnh phần thưởng ${escapeHTML(prizeText)}">
+   <img class="history-icon" src="${imagePath}" alt="${escapeHTML(prizeText)}" loading="lazy">
+   <div><div class="history-prize">${escapeHTML(prizeText)}</div>
+   <div class="history-date">${escapeHTML(entry.date || "")}</div>
+   <div class="history-open">👆 Nhấn vào đây để xem ảnh voucher</div></div></article>`;
+            }).join("");
+        }
+        function historyImageFor(prizeText) {
+            const normalized = String(prizeText || "").toLowerCase();
+            if (normalized.includes("5.000.000") || normalized.includes("5 triệu")) return "assets/voucher-uu-dai-dac-biet.png";
+            if (normalized.includes("3.000.000") || normalized.includes("3 triệu")) return "assets/voucher-hapas.jpg";
+            const matched = prizes.find(p => p.name.toLowerCase() === normalized);
+            return matched ? matched.img : "assets/voucher-uu-dai-dac-biet.png";
+        }
+        function escapeHTML(value) { return String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+        function saveHistory(prize) {
+            const entries = readHistory();
+            entries.push({ prize, date: new Date().toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "medium" }) });
+            try { localStorage.setItem(HISTORY_KEY, JSON.stringify(entries)); } catch (e) { }
+            renderHistory();
+        }
+        document.getElementById("clearHistory")?.addEventListener("click", () => {
+            try { localStorage.removeItem(HISTORY_KEY) } catch (e) { }
+            renderHistory();
+        });
+        renderHistory();
+        const historyDialog = document.getElementById("history");
+        function openHistory() {
+            renderHistory();
+            if (!historyDialog.open) historyDialog.showModal();
+        }
+        document.getElementById("openHistory").addEventListener("click", openHistory);
+        document.getElementById("closeHistory").addEventListener("click", () => historyDialog.close());
+        historyDialog.addEventListener("click", event => {
+            const rect = historyDialog.getBoundingClientRect();
+            if (event.target === historyDialog &&
+                (event.clientX < rect.left || event.clientX > rect.right ||
+                    event.clientY < rect.top || event.clientY > rect.bottom)) historyDialog.close();
+        });
+        const historyModal = document.getElementById("historyModal");
+        const historyModalImage = document.getElementById("historyModalImage");
+        const historyModalCaption = document.getElementById("historyModalCaption");
+        function openHistoryImage(imagePath, prizeName, justWon = false) {
+            if (!imagePath) return;
+            historyModalImage.src = imagePath;
+            historyModalImage.alt = prizeName || "Hình ảnh phần thưởng";
+            document.getElementById("historyModalTitle").textContent = justWon
+                ? "🎉 Chúc mừng bạn!" : "🎁 Phần thưởng của bạn";
+            historyModalCaption.textContent = "Bạn nhận được " + (prizeName === prizes[WINNING_INDEX].name
+                ? "Voucher ưu đãi đặc biệt" : (prizeName || "phần thưởng HAPAS"));
+            historyModal.showModal();
+        }
+        document.getElementById("historyList").addEventListener("click", event => {
+            const item = event.target.closest(".history-item");
+            if (item) openHistoryImage(item.dataset.image, item.dataset.prize);
+        });
+        document.getElementById("historyList").addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                const item = event.target.closest(".history-item");
+                if (item) { event.preventDefault(); openHistoryImage(item.dataset.image, item.dataset.prize); }
+            }
+        });
+        function closeHistoryImage() { historyModal.close(); }
+        document.getElementById("closeHistoryModal").addEventListener("click", closeHistoryImage);
+        document.getElementById("dismissPrize").addEventListener("click", closeHistoryImage);
+        document.getElementById("viewPrizeHistory").addEventListener("click", () => {
+            closeHistoryImage();
+            openHistory();
+        });
+        historyModal.addEventListener("click", event => { if (event.target === historyModal) closeHistoryImage(); });
+        function showUsed() { spinBtn.disabled = true; spinBtn.textContent = "💗 ĐÃ NHẬN LƯỢT QUAY"; hint.textContent = "Cảm ơn bạn đã tham gia sinh nhật HAPAS! 💗"; }
+        if (alreadyUsed()) showUsed();
+        spinBtn.addEventListener("click", () => {
+            if (spinning || alreadyUsed()) return;
+            spinning = true; spinBtn.disabled = true; spinBtn.textContent = "✨ ĐANG QUAY..."; hint.textContent = "Cùng quay và đón nhận món quà sinh nhật HAPAS nhé! 💕";
+            try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); audioCtx.resume() } catch (e) { }
+            spinSound();
+            // The wheel visibly spins and stops on the Voucher HAPAS segment by design.
+            const targetIndex = WINNING_INDEX;
+            // Aim the selected Voucher HAPAS segment at the fixed pointer.
+            const pointerAngle = -Math.PI / 2;
+            const prizeCenterAngle = -Math.PI / 2 + (targetIndex + 0.5) * slice;
+            const targetAngle = pointerAngle - prizeCenterAngle;
+            const normalized = ((targetAngle - rotation) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+            const extraTurns = Math.PI * 2 * 6;
+            const start = performance.now(), duration = 6000;
+            const startRotation = rotation, endRotation = rotation + extraTurns + normalized;
+            function animate(now) {
+                const t = Math.min(1, (now - start) / duration), ease = 1 - Math.pow(1 - t, 4);
+                rotation = startRotation + (endRotation - startRotation) * ease; drawWheel();
+                if (t < 1) { requestAnimationFrame(animate) } else {
+                    rotation = endRotation % (Math.PI * 2); drawWheel(); spinning = false; setUsed();
+                    const resultTitle = document.getElementById("resultTitle");
+                    const resultImage = document.getElementById("resultImage");
+                    const resultPrize = document.getElementById("resultPrize");
+                    resultTitle.textContent = "CHÚC MỪNG BẠN ĐÃ TRÚNG QUÀ!";
+                    resultImage.src = "assets/voucher-uu-dai-dac-biet.png";
+                    resultImage.alt = "VOUCHER ƯU ĐÃI ĐẶC BIỆT";
+                    resultPrize.textContent = "🎁 VOUCHER ƯU ĐÃI ĐẶC BIỆT 💖";
+                    saveHistory("VOUCHER ƯU ĐÃI ĐẶC BIỆT");
+                    openHistoryImage(prizes[WINNING_INDEX].img, prizes[WINNING_INDEX].name, true);
+                    spinBtn.textContent = "💗 ĐÃ NHẬN LƯỢT QUAY";
+                    hint.textContent = "Chúc mừng bạn đã trúng quà sinh nhật HAPAS!";
+                    winSound(); confetti();
+                }
+            }
+            requestAnimationFrame(animate);
+        });
+    </script>
+</body>
+
+</html>
