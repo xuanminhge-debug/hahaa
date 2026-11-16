@@ -1230,7 +1230,7 @@
         const W = canvas.width, C = W / 2, R = 410, N = prizes.length, slice = Math.PI * 2 / N;
         const USED_KEY = "hapas_birthday7_spin_used_v1";
         const ROTATION_KEY = "hapas_birthday7_spin_rotation_v1";
-        const WINNING_INDEX = 1;
+        const WINNING_INDEX = 8;
         function restoreRotation() {
             try {
                 if (localStorage.getItem(USED_KEY) !== "1") return 0;
@@ -1239,7 +1239,7 @@
                     return ((Number(saved) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
                 }
                 // Older completed spins always awarded the same voucher.
-                return (Math.PI * 2 - (WINNING_INDEX + 0.5) * slice) % (Math.PI * 2);
+                return (Math.PI * 2 - (1 + 0.5) * slice) % (Math.PI * 2);
             } catch (e) { return 0; }
         }
         let rotation = restoreRotation(), spinning = false;
@@ -1300,7 +1300,7 @@
                 }
                 if (line) lines.push(line);
                 if (lines.length > 2) lines = [lines.slice(0, 2).join(" "), lines.slice(2).join(" ")];
-                if (i === WINNING_INDEX) {
+                if (i === 1) {
                     lines = ["VOUCHER", "ƯU ĐÃI", "ĐẶC BIỆT"];
                 }
                 lines.forEach((ln, j) => ctx.fillText(ln, 0, (j - (lines.length - 1) / 2) * 19));
@@ -1414,7 +1414,7 @@
             if (!entries.length) { list.innerHTML = '<div class="history-empty">Chưa có lượt quay nào. Hãy nhấn “QUAY NGAY” để bắt đầu nhé! 💗</div>'; return; }
             list.innerHTML = entries.slice().reverse().map((entry, index) => {
                 const storedPrize = String(entry.prize || "");
-                const prizeText = /5\.000\.000|5 tri\u1ec7u/i.test(storedPrize) ? prizes[WINNING_INDEX].name : storedPrize;
+                const prizeText = /5\.000\.000|5 tri\u1ec7u/i.test(storedPrize) ? prizes[1].name : storedPrize;
                 const imagePath = historyImageFor(prizeText);
                 return `<article class="history-item" role="button" tabindex="0" data-image="${imagePath}" data-prize="${escapeHTML(prizeText)}" aria-label="Nhấn để xem ảnh phần thưởng ${escapeHTML(prizeText)}">
    <img class="history-icon" src="${imagePath}" alt="${escapeHTML(prizeText)}" loading="lazy">
@@ -1462,10 +1462,14 @@
             if (!imagePath) return;
             historyModalImage.src = imagePath;
             historyModalImage.alt = prizeName || "Hình ảnh phần thưởng";
-            document.getElementById("historyModalTitle").textContent = justWon
-                ? "🎉 Chúc mừng bạn!" : "🎁 Phần thưởng của bạn";
-            historyModalCaption.textContent = "Bạn nhận được " + (prizeName === prizes[WINNING_INDEX].name
-                ? "Voucher ưu đãi đặc biệt" : (prizeName || "phần thưởng HAPAS"));
+            const noPrize = prizeName === prizes[8].name;
+            document.getElementById("historyModalTitle").textContent = noPrize
+                ? prizes[8].name
+                : (justWon ? "🎉 Chúc mừng bạn!" : "🎁 Phần thưởng của bạn");
+            historyModalCaption.textContent = noPrize
+                ? "Cảm ơn bạn đã tham gia sinh nhật HAPAS!"
+                : "Bạn nhận được " + (prizeName === prizes[1].name
+                    ? "Voucher ưu đãi đặc biệt" : (prizeName || "phần thưởng HAPAS"));
             historyModal.showModal();
         }
         document.getElementById("historyList").addEventListener("click", event => {
@@ -1493,9 +1497,9 @@
             spinning = true; spinBtn.disabled = true; spinBtn.textContent = "✨ ĐANG QUAY..."; hint.textContent = "Cùng quay và đón nhận món quà sinh nhật HAPAS nhé! 💕";
             try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); audioCtx.resume() } catch (e) { }
             spinSound();
-            // The wheel visibly spins and stops on the Voucher HAPAS segment by design.
+            // Stop at the configured result segment.
             const targetIndex = WINNING_INDEX;
-            // Aim the selected Voucher HAPAS segment at the fixed pointer.
+            // Align the selected segment with the fixed pointer.
             const pointerAngle = -Math.PI / 2;
             const prizeCenterAngle = -Math.PI / 2 + (targetIndex + 0.5) * slice;
             const targetAngle = pointerAngle - prizeCenterAngle;
@@ -1511,15 +1515,16 @@
                     const resultTitle = document.getElementById("resultTitle");
                     const resultImage = document.getElementById("resultImage");
                     const resultPrize = document.getElementById("resultPrize");
-                    resultTitle.textContent = "CHÚC MỪNG BẠN ĐÃ TRÚNG QUÀ!";
-                    resultImage.src = "assets/voucher-uu-dai-dac-biet.png";
-                    resultImage.alt = "VOUCHER ƯU ĐÃI ĐẶC BIỆT";
-                    resultPrize.textContent = "🎁 VOUCHER ƯU ĐÃI ĐẶC BIỆT 💖";
-                    saveHistory("VOUCHER ƯU ĐÃI ĐẶC BIỆT");
+                    const selectedPrize = prizes[WINNING_INDEX];
+                    resultTitle.textContent = selectedPrize.name;
+                    resultImage.src = selectedPrize.img;
+                    resultImage.alt = selectedPrize.name;
+                    resultPrize.textContent = selectedPrize.name;
+                    saveHistory(selectedPrize.name);
                     openHistoryImage(prizes[WINNING_INDEX].img, prizes[WINNING_INDEX].name, true);
                     spinBtn.textContent = "💗 ĐÃ NHẬN LƯỢT QUAY";
-                    hint.textContent = "Chúc mừng bạn đã trúng quà sinh nhật HAPAS!";
-                    winSound(); confetti();
+                    hint.textContent = selectedPrize.name;
+                    if (WINNING_INDEX !== 8) { winSound(); confetti(); }
                 }
             }
             requestAnimationFrame(animate);
